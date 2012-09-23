@@ -19,9 +19,9 @@ namespace Excercise_1___Student_Registration
     /// <summary>
     /// A basic page that provides characteristics common to most applications.
     /// </summary>
-    public sealed partial class MainPage : Excercise_1___Student_Registration.Common.LayoutAwarePage
+    public sealed partial class StudentDetailsPage : Excercise_1___Student_Registration.Common.LayoutAwarePage
     {
-        public MainPage()
+        public StudentDetailsPage()
         {
             this.InitializeComponent();
         }
@@ -47,16 +47,6 @@ namespace Excercise_1___Student_Registration
         /// <param name="pageState">An empty dictionary to be populated with serializable state.</param>
         protected override void SaveState(Dictionary<String, Object> pageState)
         {
-        }
-
-        private void NextButton_Click(object sender, RoutedEventArgs e)
-        {
-            this.Frame.Navigate(typeof(StudentDetailsPage));
-        }
-
-        private void regsiterBtn_Click(object sender, RoutedEventArgs e)
-        {
-
         }
     }
 }
