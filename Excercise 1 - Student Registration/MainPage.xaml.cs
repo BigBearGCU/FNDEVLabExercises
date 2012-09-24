@@ -21,9 +21,14 @@ namespace Excercise_1___Student_Registration
     /// </summary>
     public sealed partial class MainPage : Excercise_1___Student_Registration.Common.LayoutAwarePage
     {
+        //Instance of Student
+        private Student registeredStudent;
+
         public MainPage()
         {
             this.InitializeComponent();
+            registeredStudent = null;
+            resetUIToDefault();
         }
 
         /// <summary>
@@ -51,12 +56,61 @@ namespace Excercise_1___Student_Registration
 
         private void NextButton_Click(object sender, RoutedEventArgs e)
         {
-            this.Frame.Navigate(typeof(StudentDetailsPage));
+            //Navigate to the next page
+            this.Frame.Navigate(typeof(StudentDetailsPage),registeredStudent);
         }
 
         private void regsiterBtn_Click(object sender, RoutedEventArgs e)
         {
+            //Create new Address
+            Address address = new Address();
+            //We are parsing the contents of the text box to an int, we should probably use TryParse instead
+            address.HouseNumber = int.Parse(houseNoTxtBox.Text);
+            address.StreetName=streetTxtBox.Text;
+            address.City=cityTxtBox.Text;
+            address.PostCode=postcodeTxtBox.Text;
+            address.Country=countryTxtBox.Text;
 
+            //Create new Contact
+            Contact contact = new Contact();
+            contact.HomePhoneNumber = homeNumberTxtBox.Text;
+            contact.MobilePhoneNumber = mobileNumberTxtBox.Text;
+            contact.EmailAddress = emailTxtBox.Text;
+
+            //Create Student
+            registeredStudent = new Student();
+            registeredStudent.Surname =surnameTxtBox.Text;
+            registeredStudent.Firstname = firstNameTxtBox.Text;
+            //We are parsing the contents of the text box to a DateTime value, we should use TryParse instead
+            registeredStudent.DateOfBirth = DateTime.Parse(dateTxtBox.Text);
+            registeredStudent.TermAddress = address;
+            registeredStudent.CourseStudying =courseTxtBox.Text;
+            //Casting the selected index of the combobox, this should map to the enum. We would probably be better
+            //binding the actual YearOfStudy type
+            registeredStudent.Year = (YearOfStudy)yearComboBox.SelectedIndex;
+            registeredStudent.ContactDetails = contact;
+
+            resetUIToDefault();
+
+        }
+
+        private void resetUIToDefault()
+        {
+            streetTxtBox.Text = "";
+            houseNoTxtBox.Text = "";
+            cityTxtBox.Text = "";
+            postcodeTxtBox.Text = "";
+            countryTxtBox.Text = "";
+
+            homeNumberTxtBox.Text = "";
+            mobileNumberTxtBox.Text = "";
+            emailTxtBox.Text = "";
+
+            surnameTxtBox.Text = "";
+            firstNameTxtBox.Text = "";
+            dateTxtBox.Text = "";
+            courseTxtBox.Text = "";
+            yearComboBox.SelectedIndex = -1;
         }
     }
 }

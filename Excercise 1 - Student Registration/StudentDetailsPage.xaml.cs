@@ -24,8 +24,16 @@ namespace Excercise_1___Student_Registration
         public StudentDetailsPage()
         {
             this.InitializeComponent();
+            //This function will set every UI element default
+            resetUIToDefault();
         }
 
+        protected override void OnNavigatedTo(NavigationEventArgs e)
+        {
+            Student registeredStudent = (Student)e.Parameter;
+            //Fill out UI
+            updateUIWithRegisteredStudent(registeredStudent);
+        }
         /// <summary>
         /// Populates the page with content passed during navigation.  Any saved state is also
         /// provided when recreating a page from a prior session.
@@ -47,6 +55,64 @@ namespace Excercise_1___Student_Registration
         /// <param name="pageState">An empty dictionary to be populated with serializable state.</param>
         protected override void SaveState(Dictionary<String, Object> pageState)
         {
+        }
+
+        private void backBtn_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void editBtn_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void deleteBtn_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void forwardBtn_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void updateUIWithRegisteredStudent(Student student)
+        {
+            streetTxtBox.Text = student.TermAddress.StreetName;
+            houseNoTxtBox.Text = student.TermAddress.HouseNumber.ToString();
+            cityTxtBox.Text = student.TermAddress.City;
+            postcodeTxtBox.Text = student.TermAddress.PostCode;
+            countryTxtBox.Text = student.TermAddress.Country;
+
+            homeNumberTxtBox.Text = student.ContactDetails.HomePhoneNumber;
+            mobileNumberTxtBox.Text = student.ContactDetails.MobilePhoneNumber;
+            emailTxtBox.Text = student.ContactDetails.EmailAddress;
+
+            surnameTxtBox.Text =student.Surname;
+            firstNameTxtBox.Text = student.Firstname;
+            dateTxtBox.Text = student.DateOfBirth.ToString();
+            courseTxtBox.Text = student.CourseStudying;
+            yearComboBox.SelectedIndex = (int)student.Year;
+        }
+
+        private void resetUIToDefault()
+        {
+            streetTxtBox.Text = "";
+            houseNoTxtBox.Text = "";
+            cityTxtBox.Text = "";
+            postcodeTxtBox.Text = "";
+            countryTxtBox.Text = "";
+
+            homeNumberTxtBox.Text = "";
+            mobileNumberTxtBox.Text = "";
+            emailTxtBox.Text = "";
+
+            surnameTxtBox.Text = "";
+            firstNameTxtBox.Text = "";
+            dateTxtBox.Text = "";
+            courseTxtBox.Text = "";
+            yearComboBox.SelectedIndex = -1;
         }
     }
 }

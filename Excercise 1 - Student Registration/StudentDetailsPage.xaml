@@ -36,6 +36,123 @@
             <Button x:Name="backButton" Click="GoBack" IsEnabled="{Binding Frame.CanGoBack, ElementName=pageRoot}" Style="{StaticResource BackButtonStyle}"/>
             <TextBlock x:Name="pageTitle" Grid.Column="1" Text="{StaticResource AppName}" Style="{StaticResource PageHeaderTextStyle}"/>
         </Grid>
+        <Grid Style="{StaticResource LayoutRootStyle}" Grid.RowSpan="2">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="140"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <VisualStateManager.VisualStateGroups>
+
+                <!-- Visual states reflect the application's view state -->
+                <VisualStateGroup x:Name="ApplicationViewStates1">
+                    <VisualState x:Name="FullScreenLandscape1"/>
+                    <VisualState x:Name="Filled1"/>
+
+                    <!-- The entire page respects the narrower 100-pixel margin convention for portrait -->
+                    <VisualState x:Name="FullScreenPortrait1">
+                        <Storyboard>
+                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="backButton" Storyboard.TargetProperty="Style">
+                                <DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource PortraitBackButtonStyle}"/>
+                            </ObjectAnimationUsingKeyFrames>
+                        </Storyboard>
+                    </VisualState>
+
+                    <!-- The back button and title have different styles when snapped -->
+                    <VisualState x:Name="Snapped1">
+                        <Storyboard>
+                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="backButton" Storyboard.TargetProperty="Style">
+                                <DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource SnappedBackButtonStyle}"/>
+                            </ObjectAnimationUsingKeyFrames>
+                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="pageTitle" Storyboard.TargetProperty="Style">
+                                <DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource SnappedPageHeaderTextStyle}"/>
+                            </ObjectAnimationUsingKeyFrames>
+                        </Storyboard>
+                    </VisualState>
+                </VisualStateGroup>
+            </VisualStateManager.VisualStateGroups>
+            <!-- Back button and page title -->
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Button x:Name="backButton1" Click="GoBack" IsEnabled="{Binding Frame.CanGoBack, ElementName=pageRoot}" Style="{StaticResource BackButtonStyle}"/>
+                <TextBlock x:Name="pageTitle1" Grid.Column="1" Text="{StaticResource AppName}" Style="{StaticResource PageHeaderTextStyle}"/>
+            </Grid>
+            <StackPanel HorizontalAlignment="Left" Grid.Row="1" VerticalAlignment="Top" Orientation="Horizontal" Height="618" Width="1356">
+
+                <Image HorizontalAlignment="Left" Height="208" VerticalAlignment="Top" Width="181" Margin="40,0,0,0"/>
+                <Grid HorizontalAlignment="Left" Height="603" VerticalAlignment="Top" Width="1138">
+                    <TextBlock HorizontalAlignment="Left" Margin="56,42,0,0" TextWrapping="Wrap" Text="Please Enter the Student Details" VerticalAlignment="Top" Style="{StaticResource GroupHeaderTextStyle}"/>
+                    <Grid Height="493" Margin="46,100,10,0" VerticalAlignment="Top">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="47*"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="41*"/>
+                            <RowDefinition Height="48*"/>
+                            <RowDefinition Height="44*"/>
+                            <RowDefinition Height="42*"/>
+                            <RowDefinition Height="57*"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" MinWidth="286"/>
+                            <ColumnDefinition Width="Auto" MinWidth="223"/>
+                            <ColumnDefinition Width="66*"/>
+                            <ColumnDefinition Width="250*"/>
+                            <ColumnDefinition Width="257*"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBox x:Name="surnameTxtBox" HorizontalAlignment="Left" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" RenderTransformOrigin="0.526,-0.188" Width="223" Grid.Column="1" Height="32"/>
+                        <TextBlock HorizontalAlignment="Left" Margin="0" TextWrapping="Wrap" VerticalAlignment="Top" Style="{StaticResource SnappedPageHeaderTextStyle}" Width="154" Height="38" Text="Firstname:" Grid.Row="1"/>
+                        <TextBlock HorizontalAlignment="Left" Margin="0" TextWrapping="Wrap" VerticalAlignment="Top" Style="{StaticResource SnappedPageHeaderTextStyle}" Height="30" Width="105">
+        					<Run Text="Surname"/>
+        					<Run Text=":"/>
+                        </TextBlock>
+                        <TextBox x:Name="firstNameTxtBox" HorizontalAlignment="Left" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" RenderTransformOrigin="0.526,-0.188" Width="223" Grid.Column="1" Grid.Row="1" Height="32" Margin="0,6,0,0"/>
+                        <TextBlock HorizontalAlignment="Left" Margin="0" TextWrapping="Wrap" VerticalAlignment="Top" Style="{StaticResource SnappedPageHeaderTextStyle}" Width="269" Height="38" Text="Date of Birth:" Grid.Row="3"/>
+                        <TextBox x:Name="dateTxtBox" Grid.Column="1" HorizontalAlignment="Left" Grid.Row="3" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="223" Margin="0,6,0,0"/>
+                        <TextBlock HorizontalAlignment="Left" Margin="1,2,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Style="{StaticResource SnappedPageHeaderTextStyle}" Width="269" Height="38" Text="Course Of Study:" Grid.Row="4"/>
+                        <TextBox x:Name="courseTxtBox" Grid.Column="1" HorizontalAlignment="Left" Grid.Row="4" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="223" Margin="0,8,0,0"/>
+                        <TextBlock HorizontalAlignment="Left" Margin="0,2,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Style="{StaticResource SnappedPageHeaderTextStyle}" Width="269" Height="38" Text="Year Of Study:" Grid.Row="5"/>
+                        <ComboBox x:Name="yearComboBox" Grid.Column="1" HorizontalAlignment="Left" Margin="0,10,0,0" Grid.Row="5" VerticalAlignment="Top" Width="223">
+                            <x:String>1st Year</x:String>
+                            <x:String>2nd Year</x:String>
+                            <x:String>3rd Year</x:String>
+                            <x:String>4th Year</x:String>
+                            <x:String>Masters Year</x:String>
+                        </ComboBox>
+                        <TextBlock HorizontalAlignment="Left" Margin="12,0,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Style="{StaticResource SnappedPageHeaderTextStyle}" Height="30" Width="242" Grid.Column="3" Text="Please Enter Address:" Grid.ColumnSpan="2"/>
+                        <TextBlock HorizontalAlignment="Left" Margin="9,0,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Style="{StaticResource SnappedPageHeaderTextStyle}" Height="30" Width="242" Grid.Column="3" Text="House Number:" Grid.Row="3" Grid.ColumnSpan="2"/>
+                        <TextBlock HorizontalAlignment="Left" Margin="9,0,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Style="{StaticResource SnappedPageHeaderTextStyle}" Height="30" Width="242" Grid.Column="3" Text="Street:" Grid.Row="4" Grid.ColumnSpan="2"/>
+                        <TextBlock HorizontalAlignment="Left" Margin="9,39,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Style="{StaticResource SnappedPageHeaderTextStyle}" Height="30" Width="242" Grid.Column="3" Text="City:" Grid.Row="4" Grid.ColumnSpan="2" Grid.RowSpan="2"/>
+                        <TextBlock HorizontalAlignment="Left" Margin="9,0,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Style="{StaticResource SnappedPageHeaderTextStyle}" Height="30" Width="242" Grid.Column="3" Text="PostCode:" Grid.Row="6" Grid.ColumnSpan="2"/>
+                        <TextBlock HorizontalAlignment="Left" Margin="8,4,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Style="{StaticResource SnappedPageHeaderTextStyle}" Height="30" Width="242" Grid.Column="3" Text="Country:" Grid.Row="7"/>
+                        <TextBox x:Name="houseNoTxtBox" HorizontalAlignment="Left" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" RenderTransformOrigin="0.526,-0.188" Width="104" Grid.Column="4" Height="32" Grid.Row="3"/>
+                        <TextBox x:Name="streetTxtBox" HorizontalAlignment="Left" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" RenderTransformOrigin="0.526,-0.188" Width="257" Grid.Column="4" Height="32" Grid.Row="4"/>
+                        <TextBox x:Name="cityTxtBox" HorizontalAlignment="Left" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" RenderTransformOrigin="0.526,-0.188" Width="257" Grid.Column="4" Height="32" Grid.Row="5" Margin="0,6,0,0"/>
+                        <TextBox x:Name="postcodeTxtBox" HorizontalAlignment="Left" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" RenderTransformOrigin="0.526,-0.188" Width="257" Grid.Column="4" Height="32" Grid.Row="6"/>
+                        <TextBox x:Name="countryTxtBox" HorizontalAlignment="Left" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" RenderTransformOrigin="0.526,-0.188" Width="257" Grid.Column="4" Height="32" Grid.Row="7" Margin="0,5,0,0" Grid.RowSpan="2"/>
+                        <TextBlock HorizontalAlignment="Left" Margin="8,4,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Style="{StaticResource SnappedPageHeaderTextStyle}" Height="30" Width="242" Grid.Column="3" Text="Home Phone Number:" Grid.Row="9"/>
+                        <TextBlock HorizontalAlignment="Left" Margin="4,1,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Style="{StaticResource SnappedPageHeaderTextStyle}" Height="30" Width="242" Grid.Column="3" Text="Mobile Phone Number:" Grid.Row="10"/>
+                        <TextBlock HorizontalAlignment="Left" Margin="3,0,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Style="{StaticResource SnappedPageHeaderTextStyle}" Height="30" Width="242" Grid.Column="3" Text="Email:" Grid.Row="11"/>
+                        <TextBox x:Name="homeNumberTxtBox" HorizontalAlignment="Left" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" RenderTransformOrigin="0.526,-0.188" Width="257" Grid.Column="4" Height="32" Grid.Row="9" Margin="0,10,0,0"/>
+                        <TextBox x:Name="mobileNumberTxtBox" HorizontalAlignment="Left" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" RenderTransformOrigin="0.526,-0.188" Width="257" Grid.Column="4" Height="32" Grid.Row="9" Margin="0,47,0,0" Grid.RowSpan="2"/>
+                        <TextBox x:Name="emailTxtBox" HorizontalAlignment="Left" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" RenderTransformOrigin="0.526,-0.188" Width="257" Grid.Column="4" Height="32" Grid.Row="11"/>
+                    </Grid>
+                </Grid>
+            </StackPanel>
+            <Button x:Name="backBtn" Content="Back" HorizontalAlignment="Left" Margin="10,590,0,0" Grid.Row="1" VerticalAlignment="Top" Click="backBtn_Click"/>
+            <Button x:Name="editBtn" Content="Edit" HorizontalAlignment="Left" Margin="594,590,0,0" Grid.Row="1" VerticalAlignment="Top" Click="editBtn_Click"/>
+            <Button x:Name="deleteBtn" Content="Delete" HorizontalAlignment="Left" Margin="723,590,0,0" Grid.Row="1" VerticalAlignment="Top" Click="deleteBtn_Click"/>
+            <Button x:Name="forwardBtn" Content="Forward" HorizontalAlignment="Left" Margin="1267,590,0,0" Grid.Row="1" VerticalAlignment="Top" Click="forwardBtn_Click"/>
+
+        </Grid>
 
         <VisualStateManager.VisualStateGroups>
 

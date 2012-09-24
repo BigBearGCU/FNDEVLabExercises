@@ -48,8 +48,15 @@
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="97*"/>
-                        <RowDefinition Height="248*"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="47*"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="41*"/>
+                        <RowDefinition Height="48*"/>
+                        <RowDefinition Height="44*"/>
+                        <RowDefinition Height="42*"/>
+                        <RowDefinition Height="57*"/>
                     </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto" MinWidth="286"/>
@@ -65,8 +72,36 @@
                     	<Run Text=":"/>
                     </TextBlock>
                     <TextBox x:Name="firstNameTxtBox" HorizontalAlignment="Left" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" RenderTransformOrigin="0.526,-0.188" Width="223" Grid.Column="1" Grid.Row="1" Height="32"/>
-                    <Button x:Name="regsiterBtn" Content="Register" HorizontalAlignment="Left" Margin="48,119,0,0" VerticalAlignment="Top" Click="regsiterBtn_Click" Grid.Row="5" Height="38" Width="88"/>
+                    <Button x:Name="regsiterBtn" Content="Register" HorizontalAlignment="Left" Margin="159,8.881,0,0" VerticalAlignment="Top" Click="regsiterBtn_Click" Grid.Row="12" Height="38" Width="88" Grid.Column="4"/>
                     <TextBlock HorizontalAlignment="Left" Margin="0" TextWrapping="Wrap" VerticalAlignment="Top" Style="{StaticResource SnappedPageHeaderTextStyle}" Width="269" Height="38" Text="Date of Birth:" Grid.Row="3"/>
+                    <TextBox x:Name="dateTxtBox" Grid.Column="1" HorizontalAlignment="Left" Grid.Row="3" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="223"/>
+                    <TextBlock HorizontalAlignment="Left" Margin="4,2,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Style="{StaticResource SnappedPageHeaderTextStyle}" Width="269" Height="38" Text="Course Of Study:" Grid.Row="4"/>
+                    <TextBox x:Name="courseTxtBox" Grid.Column="1" HorizontalAlignment="Left" Grid.Row="4" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="223"/>
+                    <TextBlock HorizontalAlignment="Left" Margin="0,39,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Style="{StaticResource SnappedPageHeaderTextStyle}" Width="269" Height="38" Text="Year Of Study:" Grid.Row="4" Grid.RowSpan="2"/>
+                    <ComboBox x:Name="yearComboBox" Grid.Column="1" HorizontalAlignment="Left" Margin="0,10,0,0" Grid.Row="5" VerticalAlignment="Top" Width="223">
+                        <x:String>1st Year</x:String>
+                        <x:String>2nd Year</x:String>
+                        <x:String>3rd Year</x:String>
+                        <x:String>4th Year</x:String>
+                        <x:String>Masters Year</x:String>
+                    </ComboBox>
+                    <TextBlock HorizontalAlignment="Left" Margin="12,0,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Style="{StaticResource SnappedPageHeaderTextStyle}" Height="30" Width="242" Grid.Column="3" Text="Please Enter Address:" Grid.ColumnSpan="2"/>
+                    <TextBlock HorizontalAlignment="Left" Margin="9,0,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Style="{StaticResource SnappedPageHeaderTextStyle}" Height="30" Width="242" Grid.Column="3" Text="House Number:" Grid.Row="3" Grid.ColumnSpan="2"/>
+                    <TextBlock HorizontalAlignment="Left" Margin="9,0,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Style="{StaticResource SnappedPageHeaderTextStyle}" Height="30" Width="242" Grid.Column="3" Text="Street:" Grid.Row="4" Grid.ColumnSpan="2"/>
+                    <TextBlock HorizontalAlignment="Left" Margin="9,39,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Style="{StaticResource SnappedPageHeaderTextStyle}" Height="30" Width="242" Grid.Column="3" Text="City:" Grid.Row="4" Grid.ColumnSpan="2" Grid.RowSpan="2"/>
+                    <TextBlock HorizontalAlignment="Left" Margin="9,0,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Style="{StaticResource SnappedPageHeaderTextStyle}" Height="30" Width="242" Grid.Column="3" Text="PostCode:" Grid.Row="6" Grid.ColumnSpan="2"/>
+                    <TextBlock HorizontalAlignment="Left" Margin="8,4,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Style="{StaticResource SnappedPageHeaderTextStyle}" Height="30" Width="242" Grid.Column="3" Text="Country:" Grid.Row="7"/>
+                    <TextBox x:Name="houseNoTxtBox" HorizontalAlignment="Left" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" RenderTransformOrigin="0.526,-0.188" Width="104" Grid.Column="4" Height="32" Grid.Row="3"/>
+                    <TextBox x:Name="streetTxtBox" HorizontalAlignment="Left" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" RenderTransformOrigin="0.526,-0.188" Width="257" Grid.Column="4" Height="32" Grid.Row="4"/>
+                    <TextBox x:Name="cityTxtBox" HorizontalAlignment="Left" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" RenderTransformOrigin="0.526,-0.188" Width="257" Grid.Column="4" Height="32" Grid.Row="5" Margin="0,6,0,0"/>
+                    <TextBox x:Name="postcodeTxtBox" HorizontalAlignment="Left" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" RenderTransformOrigin="0.526,-0.188" Width="257" Grid.Column="4" Height="32" Grid.Row="6"/>
+                    <TextBox x:Name="countryTxtBox" HorizontalAlignment="Left" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" RenderTransformOrigin="0.526,-0.188" Width="257" Grid.Column="4" Height="32" Grid.Row="7" Margin="0,5,0,0" Grid.RowSpan="2"/>
+                    <TextBlock HorizontalAlignment="Left" Margin="8,4,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Style="{StaticResource SnappedPageHeaderTextStyle}" Height="30" Width="242" Grid.Column="3" Text="Home Phone Number:" Grid.Row="9"/>
+                    <TextBlock HorizontalAlignment="Left" Margin="4,1,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Style="{StaticResource SnappedPageHeaderTextStyle}" Height="30" Width="242" Grid.Column="3" Text="Mobile Phone Number:" Grid.Row="10"/>
+                    <TextBlock HorizontalAlignment="Left" Margin="3,0,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Style="{StaticResource SnappedPageHeaderTextStyle}" Height="30" Width="242" Grid.Column="3" Text="Email:" Grid.Row="11"/>
+                    <TextBox x:Name="homeNumberTxtBox" HorizontalAlignment="Left" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" RenderTransformOrigin="0.526,-0.188" Width="257" Grid.Column="4" Height="32" Grid.Row="9" Margin="0,10,0,0"/>
+                    <TextBox x:Name="mobileNumberTxtBox" HorizontalAlignment="Left" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" RenderTransformOrigin="0.526,-0.188" Width="257" Grid.Column="4" Height="32" Grid.Row="9" Margin="0,47,0,0" Grid.RowSpan="2"/>
+                    <TextBox x:Name="emailTxtBox" HorizontalAlignment="Left" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" RenderTransformOrigin="0.526,-0.188" Width="257" Grid.Column="4" Height="32" Grid.Row="11"/>
                 </Grid>
             </Grid>
         </StackPanel>
