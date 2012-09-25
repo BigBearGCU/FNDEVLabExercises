@@ -41,6 +41,10 @@ namespace Excercise_1___Student_Registration
         public YearOfStudy Year { get; set; }
         public Contact ContactDetails { get; set; }
 
+        public override string ToString()
+        {
+            return string.Format("{0}, {1}", Surname, Firstname);
+        }
 
     }
 }

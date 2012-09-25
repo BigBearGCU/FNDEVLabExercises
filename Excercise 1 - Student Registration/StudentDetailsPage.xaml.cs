@@ -31,10 +31,15 @@ namespace Excercise_1___Student_Registration
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-            currentSelectedIndex = 0;
-            //Fill out UI
-
-            updateUIWithRegisteredStudent((App.Current as App).RegisteredStudents[currentSelectedIndex]);
+            if ((App.Current as App).RegisteredStudents.Count > 0)
+            {
+                currentSelectedIndex = 0;
+                updateUIWithRegisteredStudent((App.Current as App).RegisteredStudents[currentSelectedIndex]);
+            }
+            else
+            {
+                resetUIToDefault();
+            }
             base.OnNavigatedTo(e);
         }
         /// <summary>
@@ -70,14 +75,46 @@ namespace Excercise_1___Student_Registration
 
         private void editBtn_Click(object sender, RoutedEventArgs e)
         {
+            Student s = (App.Current as App).RegisteredStudents[currentSelectedIndex];
+            Address address = s.TermAddress;
+            Contact contact = s.ContactDetails;
+            //We are parsing the contents of the text box to an int, we should probably use TryParse instead
+            address.HouseNumber = int.Parse(houseNoTxtBox.Text);
+            address.StreetName = streetTxtBox.Text;
+            address.City = cityTxtBox.Text;
+            address.PostCode = postcodeTxtBox.Text;
+            address.Country = countryTxtBox.Text;
 
+            contact.HomePhoneNumber = homeNumberTxtBox.Text;
+            contact.MobilePhoneNumber = mobileNumberTxtBox.Text;
+            contact.EmailAddress = emailTxtBox.Text;
+
+            //Create Student
+            s.ContactDetails = contact;
+            s.TermAddress = address;
+            s.Surname = surnameTxtBox.Text;
+            s.Firstname = firstNameTxtBox.Text;
+            //We are parsing the contents of the text box to a DateTime value, we should use TryParse instead
+            s.DateOfBirth = DateTime.Parse(dateTxtBox.Text);
+            s.CourseStudying = courseTxtBox.Text;
+            //Casting the selected index of the combobox, this should map to the enum. We would probably be better
+            //binding the actual YearOfStudy type
+            s.Year = (YearOfStudy)yearComboBox.SelectedIndex;
         }
 
         private void deleteBtn_Click(object sender, RoutedEventArgs e)
         {
             (App.Current as App).RegisteredStudents.RemoveAt(currentSelectedIndex);
-            currentSelectedIndex = 0;
-            updateUIWithRegisteredStudent((App.Current as App).RegisteredStudents[currentSelectedIndex]);
+            if ((App.Current as App).RegisteredStudents.Count > 0)
+            {
+                currentSelectedIndex = 0;
+                updateUIWithRegisteredStudent((App.Current as App).RegisteredStudents[currentSelectedIndex]);
+            }
+            else
+            {
+                //clear ui
+                resetUIToDefault();
+            }
         }
 
         private void forwardBtn_Click(object sender, RoutedEventArgs e)
@@ -124,6 +161,11 @@ namespace Excercise_1___Student_Registration
             dateTxtBox.Text = "";
             courseTxtBox.Text = "";
             yearComboBox.SelectedIndex = -1;
+        }
+
+        private void searchBtn_Click(object sender, RoutedEventArgs e)
+        {
+            Frame.Navigate(typeof(SearchPage));
         }
     }
 }

@@ -148,9 +148,10 @@
                 </Grid>
             </StackPanel>
             <Button x:Name="backBtn" Content="Back" HorizontalAlignment="Left" Margin="10,590,0,0" Grid.Row="1" VerticalAlignment="Top" Click="backBtn_Click"/>
-            <Button x:Name="editBtn" Content="Edit" HorizontalAlignment="Left" Margin="594,590,0,0" Grid.Row="1" VerticalAlignment="Top" Click="editBtn_Click"/>
-            <Button x:Name="deleteBtn" Content="Delete" HorizontalAlignment="Left" Margin="723,590,0,0" Grid.Row="1" VerticalAlignment="Top" Click="deleteBtn_Click"/>
+            <Button x:Name="editBtn" Content="Edit" HorizontalAlignment="Left" Margin="500,590,0,0" Grid.Row="1" VerticalAlignment="Top" Click="editBtn_Click"/>
+            <Button x:Name="deleteBtn" Content="Delete" HorizontalAlignment="Left" Margin="588,590,0,0" Grid.Row="1" VerticalAlignment="Top" Click="deleteBtn_Click"/>
             <Button x:Name="forwardBtn" Content="Forward" HorizontalAlignment="Left" Margin="1267,590,0,0" Grid.Row="1" VerticalAlignment="Top" Click="forwardBtn_Click"/>
+            <Button x:Name="searchBtn" Content="Search" HorizontalAlignment="Left" Margin="698,590,0,0" Grid.Row="1" VerticalAlignment="Top" Click="searchBtn_Click"/>
 
         </Grid>
 
