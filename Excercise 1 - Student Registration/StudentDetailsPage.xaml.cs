@@ -21,6 +21,7 @@ namespace Excercise_1___Student_Registration
     /// </summary>
     public sealed partial class StudentDetailsPage : Excercise_1___Student_Registration.Common.LayoutAwarePage
     {
+        private int currentSelectedIndex = 0;
         public StudentDetailsPage()
         {
             this.InitializeComponent();
@@ -30,9 +31,11 @@ namespace Excercise_1___Student_Registration
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-            Student registeredStudent = (Student)e.Parameter;
+            currentSelectedIndex = 0;
             //Fill out UI
-            updateUIWithRegisteredStudent(registeredStudent);
+
+            updateUIWithRegisteredStudent((App.Current as App).RegisteredStudents[currentSelectedIndex]);
+            base.OnNavigatedTo(e);
         }
         /// <summary>
         /// Populates the page with content passed during navigation.  Any saved state is also
@@ -59,7 +62,10 @@ namespace Excercise_1___Student_Registration
 
         private void backBtn_Click(object sender, RoutedEventArgs e)
         {
-
+            currentSelectedIndex--;
+            if (currentSelectedIndex < 0)
+                currentSelectedIndex = 0;
+            updateUIWithRegisteredStudent((App.Current as App).RegisteredStudents[currentSelectedIndex]);
         }
 
         private void editBtn_Click(object sender, RoutedEventArgs e)
@@ -69,12 +75,17 @@ namespace Excercise_1___Student_Registration
 
         private void deleteBtn_Click(object sender, RoutedEventArgs e)
         {
-
+            (App.Current as App).RegisteredStudents.RemoveAt(currentSelectedIndex);
+            currentSelectedIndex = 0;
+            updateUIWithRegisteredStudent((App.Current as App).RegisteredStudents[currentSelectedIndex]);
         }
 
         private void forwardBtn_Click(object sender, RoutedEventArgs e)
         {
-
+            currentSelectedIndex++;
+            if (currentSelectedIndex > (App.Current as App).RegisteredStudents.Count - 1)
+                currentSelectedIndex = (App.Current as App).RegisteredStudents.Count - 1;
+            updateUIWithRegisteredStudent((App.Current as App).RegisteredStudents[currentSelectedIndex]);
         }
 
         private void updateUIWithRegisteredStudent(Student student)

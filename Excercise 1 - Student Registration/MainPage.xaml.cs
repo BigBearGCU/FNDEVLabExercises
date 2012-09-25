@@ -57,7 +57,7 @@ namespace Excercise_1___Student_Registration
         private void NextButton_Click(object sender, RoutedEventArgs e)
         {
             //Navigate to the next page
-            this.Frame.Navigate(typeof(StudentDetailsPage),registeredStudent);
+            this.Frame.Navigate(typeof(StudentDetailsPage));
         }
 
         private void regsiterBtn_Click(object sender, RoutedEventArgs e)
@@ -89,6 +89,8 @@ namespace Excercise_1___Student_Registration
             //binding the actual YearOfStudy type
             registeredStudent.Year = (YearOfStudy)yearComboBox.SelectedIndex;
             registeredStudent.ContactDetails = contact;
+
+            (App.Current as App).RegisteredStudents.Add(registeredStudent); 
 
             resetUIToDefault();
 

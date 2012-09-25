@@ -23,6 +23,7 @@ namespace Excercise_1___Student_Registration
     /// </summary>
     sealed partial class App : Application
     {
+        public List<Student> RegisteredStudents { get; set; }
         /// <summary>
         /// Initializes the singleton application object.  This is the first line of authored code
         /// executed, and as such is the logical equivalent of main() or WinMain().
@@ -30,6 +31,7 @@ namespace Excercise_1___Student_Registration
         public App()
         {
             this.InitializeComponent();
+            RegisteredStudents = new List<Student>();
             this.Suspending += OnSuspending;
         }
 
