@@ -1,15 +1,19 @@
-﻿using System;
+﻿using Excercise_1___Student_Registration.Settings;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.UI.ApplicationSettings;
+using Windows.UI.Popups;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
 using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
+using Windows.UI.Xaml.Media.Animation;
 using Windows.UI.Xaml.Navigation;
 
 // The Basic Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=234237
@@ -23,12 +27,91 @@ namespace Excercise_1___Student_Registration
     {
         //Instance of Student
         private Student registeredStudent;
+        // This is the container that will hold our custom content.
+        private Popup settingsPopup;
+
+        // Desired width for the settings UI. UI guidelines specify this should be 346 or 646 depending on your needs.
+        private double settingsWidth = 646;
+
+
+        // Used to determine the correct height to ensure our custom UI fills the screen.
+        private Rect windowBounds;
 
         public MainPage()
         {
             this.InitializeComponent();
+            windowBounds = Window.Current.Bounds;
             registeredStudent = null;
             resetUIToDefault();
+            SettingsPane.GetForCurrentView().CommandsRequested += MainPage_CommandsRequested;
+        }
+
+        void onSettingsCommand(IUICommand command)
+        {
+            SettingsCommand settingsCommand = (SettingsCommand)command;
+            if ((string)settingsCommand.Id == "defaultPage")
+            {
+                
+                // Create a Popup window which will contain our flyout.
+                settingsPopup = new Popup();
+                settingsPopup.Closed += OnPopupClosed;
+                Window.Current.Activated += OnWindowActivated;
+                settingsPopup.IsLightDismissEnabled = true;
+                settingsPopup.Width = settingsWidth;
+                settingsPopup.Height = windowBounds.Height;
+
+                // Add the proper animation for the panel.
+                settingsPopup.ChildTransitions = new TransitionCollection();
+                settingsPopup.ChildTransitions.Add(new PaneThemeTransition()
+                {
+                    Edge = (SettingsPane.Edge == SettingsEdgeLocation.Right) ?
+                           EdgeTransitionLocation.Right :
+                           EdgeTransitionLocation.Left
+                });
+
+                // Create a SettingsFlyout the same dimenssions as the Popup.
+                SettingsFlyout mypane = new SettingsFlyout();
+                mypane.Width = settingsWidth;
+                mypane.Height = windowBounds.Height;
+
+                // Place the SettingsFlyout inside our Popup window.
+                settingsPopup.Child = mypane;
+
+                // Let's define the location of our Popup.
+                settingsPopup.SetValue(Canvas.LeftProperty, SettingsPane.Edge == SettingsEdgeLocation.Right ? (windowBounds.Width - settingsWidth) : 0);
+                settingsPopup.SetValue(Canvas.TopProperty, 0);
+                settingsPopup.IsOpen = true;
+            }
+           
+        }
+
+        void MainPage_CommandsRequested(SettingsPane sender, SettingsPaneCommandsRequestedEventArgs args)
+        {
+            UICommandInvokedHandler handler = new UICommandInvokedHandler(onSettingsCommand);
+
+            SettingsCommand generalCommand = new SettingsCommand("generalSettings", "General", handler);
+            args.Request.ApplicationCommands.Add(generalCommand);
+
+            SettingsCommand helpCommand = new SettingsCommand("helpPage", "Help", handler);
+            args.Request.ApplicationCommands.Add(helpCommand);
+
+            SettingsCommand defaultCommand = new SettingsCommand("defaultPage", "Default", handler);
+            args.Request.ApplicationCommands.Add(defaultCommand);
+
+
+        }
+
+        private void OnWindowActivated(object sender, Windows.UI.Core.WindowActivatedEventArgs e)
+        {
+            if (e.WindowActivationState == Windows.UI.Core.CoreWindowActivationState.Deactivated)
+            {
+                settingsPopup.IsOpen = false;
+            }
+        }
+
+        private void OnPopupClosed(object sender, object e)
+        {
+            Window.Current.Activated -= OnWindowActivated;
         }
 
         /// <summary>
