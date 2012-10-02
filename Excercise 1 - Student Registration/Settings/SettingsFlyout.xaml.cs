@@ -26,6 +26,8 @@ namespace Excercise_1___Student_Registration.Settings
         // The guidelines recommend using 100px offset for the content animation.
         const int ContentAnimationOffset = 100;
 
+        Windows.Storage.ApplicationDataContainer localSettings = Windows.Storage.ApplicationData.Current.LocalSettings;
+
         public SettingsFlyout()
         {
             this.InitializeComponent();
@@ -34,6 +36,9 @@ namespace Excercise_1___Student_Registration.Settings
             {
                 FromHorizontalOffset = (SettingsPane.Edge == SettingsEdgeLocation.Right) ? ContentAnimationOffset : (ContentAnimationOffset * -1)
             });
+            string username=(string)localSettings.Values["Username"];
+            if (username!=null)
+                usernameTxtBox.Text = username;
         }
 
         /// <summary>
@@ -73,6 +78,12 @@ namespace Excercise_1___Student_Registration.Settings
             {
                 SettingsPane.Show();
             }
+        }
+
+        private void SaveButton_Click(object sender, RoutedEventArgs e)
+        {
+            //Save buttons
+            localSettings.Values["Username"] = usernameTxtBox.Text;
         }
     }
 }

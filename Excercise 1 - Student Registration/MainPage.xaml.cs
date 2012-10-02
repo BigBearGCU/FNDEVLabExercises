@@ -33,7 +33,8 @@ namespace Excercise_1___Student_Registration
         // Desired width for the settings UI. UI guidelines specify this should be 346 or 646 depending on your needs.
         private double settingsWidth = 646;
 
-
+        Windows.Storage.ApplicationDataContainer localSettings = Windows.Storage.ApplicationData.Current.LocalSettings;
+        
         // Used to determine the correct height to ensure our custom UI fills the screen.
         private Rect windowBounds;
 
@@ -51,7 +52,6 @@ namespace Excercise_1___Student_Registration
             SettingsCommand settingsCommand = (SettingsCommand)command;
             if ((string)settingsCommand.Id == "defaultPage")
             {
-                
                 // Create a Popup window which will contain our flyout.
                 settingsPopup = new Popup();
                 settingsPopup.Closed += OnPopupClosed;

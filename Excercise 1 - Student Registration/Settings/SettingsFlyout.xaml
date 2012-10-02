@@ -39,7 +39,9 @@
         <ScrollViewer HorizontalAlignment="Left" Grid.Row="1" VerticalAlignment="Top" Width="600" Height="628">
             <Grid>
                 <StackPanel x:Name="FlyoutContent" HorizontalAlignment="Left" Margin="4,6,-1,0" VerticalAlignment="Top" Height="621" RenderTransformOrigin="0.5,0.5" Width="597">
-                    <TextBlock Text="Test" Style="{StaticResource PageSubheaderTextStyle}"/>
+                    <TextBlock Text="Username" Style="{StaticResource SubheaderTextStyle}"/>
+                    <TextBox x:Name="usernameTxtBox" TextWrapping="Wrap" Text="TextBox"/>
+                    <Button x:Name="SaveButton" Content="Save Settings" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Click="SaveButton_Click"/>
                 </StackPanel>
             </Grid>
         </ScrollViewer>
