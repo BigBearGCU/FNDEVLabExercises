@@ -6,6 +6,8 @@ using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.Storage;
+using Windows.Storage.Search;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -24,6 +26,8 @@ namespace Excercise_1___Student_Registration
     sealed partial class App : Application
     {
         public List<Student> RegisteredStudents { get; set; }
+        private StorageFile studentsFile=null;
+
         /// <summary>
         /// Initializes the singleton application object.  This is the first line of authored code
         /// executed, and as such is the logical equivalent of main() or WinMain().
@@ -71,8 +75,63 @@ namespace Excercise_1___Student_Registration
                     throw new Exception("Failed to create initial page");
                 }
             }
+
+
+            LoadStudentDetails();
             // Ensure the current window is active
             Window.Current.Activate();
+        }
+
+        async void LoadStudentDetails()
+        {
+            // Check to see if file exists
+            //Get local storage folder
+            StorageFolder storageFolder = Windows.Storage.ApplicationData.Current.LocalFolder;
+            //create a file query
+            StorageFileQueryResult fileResults = storageFolder.CreateFileQuery();
+            //Get all files in the directory
+            IReadOnlyList<StorageFile> fileList = await fileResults.GetFilesAsync();
+            //check to see if we have a file
+            studentsFile=fileList.SingleOrDefault(file => file.Name == "students.txt");
+            if (studentsFile == null)
+            {
+                //if not create
+                studentsFile=await storageFolder.CreateFileAsync("students.txt");
+            }
+            else
+            {
+                //else load from a stream
+                using (Stream s = await studentsFile.OpenStreamForReadAsync())
+                {
+                    using (StreamReader reader = new StreamReader(s))
+                    {
+                        while (!reader.EndOfStream)
+                        {
+                            string line = reader.ReadLine();
+                            Student student = new Student();
+                            student.parse(line);
+                            RegisteredStudents.Add(student);
+                        }
+                    }
+                }
+                
+
+
+            }
+        }
+
+        async void SaveStudentDetails()
+        {
+            using (Stream s = await studentsFile.OpenStreamForWriteAsync())
+            {
+                using (StreamWriter writer = new StreamWriter(s))
+                {
+                    foreach (Student student in RegisteredStudents)
+                    {
+                        writer.Write(student.ToString() + "\n");
+                    }
+                }
+            }
         }
 
         /// <summary>
@@ -86,6 +145,7 @@ namespace Excercise_1___Student_Registration
         {
             var deferral = e.SuspendingOperation.GetDeferral();
             //TODO: Save application state and stop any background activity
+            SaveStudentDetails();
             deferral.Complete();
         }
     }
