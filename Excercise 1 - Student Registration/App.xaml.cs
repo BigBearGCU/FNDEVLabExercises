@@ -101,35 +101,26 @@ namespace Excercise_1___Student_Registration
             else
             {
                 //else load from a stream
-                using (Stream s = await studentsFile.OpenStreamForReadAsync())
+                using (StreamReader reader=new StreamReader(await studentsFile.OpenStreamForReadAsync()))
                 {
-                    using (StreamReader reader = new StreamReader(s))
+                    while (!reader.EndOfStream)
                     {
-                        while (!reader.EndOfStream)
-                        {
-                            string line = reader.ReadLine();
-                            Student student = new Student();
-                            student.parse(line);
-                            RegisteredStudents.Add(student);
-                        }
+                        string line = reader.ReadLine();
+                        Student student = new Student();
+                        student.parse(line);
+                        RegisteredStudents.Add(student);
                     }
                 }
-                
-
-
             }
         }
 
         async void SaveStudentDetails()
         {
-            using (Stream s = await studentsFile.OpenStreamForWriteAsync())
+            using (StreamWriter writer = new StreamWriter(await studentsFile.OpenStreamForWriteAsync()))
             {
-                using (StreamWriter writer = new StreamWriter(s))
+                foreach (Student student in RegisteredStudents)
                 {
-                    foreach (Student student in RegisteredStudents)
-                    {
-                        writer.Write(student.ToString() + "\n");
-                    }
+                    writer.Write(student.ToString() + "\n");
                 }
             }
         }
