@@ -120,7 +120,7 @@ namespace Excercise_1___Student_Registration
             {
                 foreach (Student student in RegisteredStudents)
                 {
-                    writer.Write(student.ToString() + "\n");
+                    writer.WriteLine(student.ToString());
                 }
             }
         }
