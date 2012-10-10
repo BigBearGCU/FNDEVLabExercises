@@ -1,4 +1,4 @@
-﻿using Excercise_1___Student_Registration.Settings;
+﻿using Callisto.Controls;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -33,10 +33,10 @@ namespace Excercise_1___Student_Registration
         private StorageFile studentsFile=null;
 
         // This is the container that will hold our custom content.
-        private Popup settingsPopup;
+        SettingsFlyout settings;
 
         // Desired width for the settings UI. UI guidelines specify this should be 346 or 646 depending on your needs.
-        private double settingsWidth = 646;
+        private double settingsWidth = 323;
 
         /// <summary>
         /// Initializes the singleton application object.  This is the first line of authored code
@@ -68,44 +68,50 @@ namespace Excercise_1___Student_Registration
             SettingsCommand settingsCommand = (SettingsCommand)command;
             if ((string)settingsCommand.Id == "defaultPage")
             {
-                // Create a Popup window which will contain our flyout.
-                settingsPopup = new Popup();
-                settingsPopup.Closed += OnPopupClosed;
-                Window.Current.Activated += OnWindowActivated;
-                settingsPopup.IsLightDismissEnabled = true;
-                settingsPopup.Width = settingsWidth;
-                settingsPopup.Height = Window.Current.Bounds.Height;
+                settings = new SettingsFlyout();
+                settings.FlyoutWidth = (Callisto.Controls.SettingsFlyout.SettingsFlyoutWidth)Enum.Parse(typeof(Callisto.Controls.SettingsFlyout.SettingsFlyoutWidth), settingsWidth.ToString());
+                //settings.HeaderBrush = new SolidColorBrush(Colors.Orange);
+                //settings.Background = new SolidColorBrush(Colors.Red);
+                settings.HeaderText = "Foo Bar Custom Settings";
 
-                // Add the proper animation for the panel.
-                settingsPopup.ChildTransitions = new TransitionCollection();
-                settingsPopup.ChildTransitions.Add(new PaneThemeTransition()
-                {
-                    Edge = (SettingsPane.Edge == SettingsEdgeLocation.Right) ?
-                           EdgeTransitionLocation.Right :
-                           EdgeTransitionLocation.Left
-                });
 
-                // Create a SettingsFlyout the same dimenssions as the Popup.
-                SettingsFlyout mypane = new SettingsFlyout();
-                mypane.Width = settingsWidth;
-                mypane.Height = Window.Current.Bounds.Width;
 
-                // Place the SettingsFlyout inside our Popup window.
-                settingsPopup.Child = mypane;
+                StackPanel sp = new StackPanel();
+                sp.Width = settingsWidth;
 
-                // Let's define the location of our Popup.
-                settingsPopup.SetValue(Canvas.LeftProperty, SettingsPane.Edge == SettingsEdgeLocation.Right ? (Window.Current.Bounds.Width - settingsWidth) : 0);
-                settingsPopup.SetValue(Canvas.TopProperty, 0);
-                settingsPopup.IsOpen = true;
+                TextBlock t = new TextBlock();
+                t.Text = "User name";
+
+                TextBox box = new TextBox();
+                box.Name = "userNameTxtBox";
+
+                Button b = new Button();
+                b.Content = "Save";
+                b.Click += b_Click;
+
+                sp.Children.Add(t);
+                sp.Children.Add(box);
+                sp.Children.Add(b);
+                settings.Content = sp;
+
+                settings.IsOpen = true;
+
             }
 
+        }
+
+        void b_Click(object sender, RoutedEventArgs e)
+        {
+            StackPanel sp = (StackPanel)settings.Content;
+            TextBox box=(TextBox)sp.FindName("userNameTxtBox");
+            string s=box.Text;
         }
 
         private void OnWindowActivated(object sender, Windows.UI.Core.WindowActivatedEventArgs e)
         {
             if (e.WindowActivationState == Windows.UI.Core.CoreWindowActivationState.Deactivated)
             {
-                settingsPopup.IsOpen = false;
+                settings.IsOpen = false;
             }
         }
 
