@@ -19,12 +19,20 @@
         <DefaultTile ShowName="allLogos" />
         <SplashScreen Image="Assets\SplashScreen.png" />
       </VisualElements>
+      <Extensions>
+        <Extension Category="windows.fileTypeAssociation">
+          <FileTypeAssociation Name="text">
+            <DisplayName>Text FIles</DisplayName>
+            <SupportedFileTypes>
+              <FileType ContentType="text/txt">.txt</FileType>
+            </SupportedFileTypes>
+          </FileTypeAssociation>
+        </Extension>
+      </Extensions>
     </Application>
   </Applications>
   <Capabilities>
-    <Capability Name="picturesLibrary" />
-    <Capability Name="musicLibrary" />
+    <Capability Name="documentsLibrary" />
     <Capability Name="internetClient" />
-    <DeviceCapability Name="location" />
   </Capabilities>
 </Package>

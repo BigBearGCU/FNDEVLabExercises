@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Excercise_1___Student_Registration.Settings;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -8,12 +9,15 @@ using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.Storage;
 using Windows.Storage.Search;
+using Windows.UI.ApplicationSettings;
+using Windows.UI.Popups;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
 using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
+using Windows.UI.Xaml.Media.Animation;
 using Windows.UI.Xaml.Navigation;
 
 // The Blank Application template is documented at http://go.microsoft.com/fwlink/?LinkId=234227
@@ -28,6 +32,12 @@ namespace Excercise_1___Student_Registration
         public List<Student> RegisteredStudents { get; set; }
         private StorageFile studentsFile=null;
 
+        // This is the container that will hold our custom content.
+        private Popup settingsPopup;
+
+        // Desired width for the settings UI. UI guidelines specify this should be 346 or 646 depending on your needs.
+        private double settingsWidth = 646;
+
         /// <summary>
         /// Initializes the singleton application object.  This is the first line of authored code
         /// executed, and as such is the logical equivalent of main() or WinMain().
@@ -37,6 +47,71 @@ namespace Excercise_1___Student_Registration
             this.InitializeComponent();
             RegisteredStudents = new List<Student>();
             this.Suspending += OnSuspending;
+            
+        }
+
+        void App_CommandsRequested(SettingsPane sender, SettingsPaneCommandsRequestedEventArgs args)
+        {
+            UICommandInvokedHandler handler = new UICommandInvokedHandler(onSettingsCommand);
+            SettingsCommand generalCommand = new SettingsCommand("generalSettings", "General", handler);
+            args.Request.ApplicationCommands.Add(generalCommand);
+
+            SettingsCommand helpCommand = new SettingsCommand("helpPage", "Help", handler);
+            args.Request.ApplicationCommands.Add(helpCommand);
+
+            SettingsCommand defaultCommand = new SettingsCommand("defaultPage", "Default", handler);
+            args.Request.ApplicationCommands.Add(defaultCommand);
+        }
+
+        void onSettingsCommand(IUICommand command)
+        {
+            SettingsCommand settingsCommand = (SettingsCommand)command;
+            if ((string)settingsCommand.Id == "defaultPage")
+            {
+                // Create a Popup window which will contain our flyout.
+                settingsPopup = new Popup();
+                settingsPopup.Closed += OnPopupClosed;
+                Window.Current.Activated += OnWindowActivated;
+                settingsPopup.IsLightDismissEnabled = true;
+                settingsPopup.Width = settingsWidth;
+                settingsPopup.Height = Window.Current.Bounds.Height;
+
+                // Add the proper animation for the panel.
+                settingsPopup.ChildTransitions = new TransitionCollection();
+                settingsPopup.ChildTransitions.Add(new PaneThemeTransition()
+                {
+                    Edge = (SettingsPane.Edge == SettingsEdgeLocation.Right) ?
+                           EdgeTransitionLocation.Right :
+                           EdgeTransitionLocation.Left
+                });
+
+                // Create a SettingsFlyout the same dimenssions as the Popup.
+                SettingsFlyout mypane = new SettingsFlyout();
+                mypane.Width = settingsWidth;
+                mypane.Height = Window.Current.Bounds.Width;
+
+                // Place the SettingsFlyout inside our Popup window.
+                settingsPopup.Child = mypane;
+
+                // Let's define the location of our Popup.
+                settingsPopup.SetValue(Canvas.LeftProperty, SettingsPane.Edge == SettingsEdgeLocation.Right ? (Window.Current.Bounds.Width - settingsWidth) : 0);
+                settingsPopup.SetValue(Canvas.TopProperty, 0);
+                settingsPopup.IsOpen = true;
+            }
+
+        }
+
+        private void OnWindowActivated(object sender, Windows.UI.Core.WindowActivatedEventArgs e)
+        {
+            if (e.WindowActivationState == Windows.UI.Core.CoreWindowActivationState.Deactivated)
+            {
+                settingsPopup.IsOpen = false;
+            }
+        }
+
+        private void OnPopupClosed(object sender, object e)
+        {
+            Window.Current.Activated -= OnWindowActivated;
         }
 
         /// <summary>
@@ -78,8 +153,11 @@ namespace Excercise_1___Student_Registration
 
 
             LoadStudentDetails();
+
             // Ensure the current window is active
             Window.Current.Activate();
+            //
+            SettingsPane.GetForCurrentView().CommandsRequested += App_CommandsRequested;
         }
 
         async void LoadStudentDetails()

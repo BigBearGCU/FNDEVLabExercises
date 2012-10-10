@@ -44,7 +44,7 @@ namespace Excercise_1___Student_Registration
             windowBounds = Window.Current.Bounds;
             registeredStudent = null;
             resetUIToDefault();
-            SettingsPane.GetForCurrentView().CommandsRequested += MainPage_CommandsRequested;
+            //SettingsPane.GetForCurrentView().CommandsRequested += MainPage_CommandsRequested;
         }
 
         void onSettingsCommand(IUICommand command)
@@ -88,7 +88,6 @@ namespace Excercise_1___Student_Registration
         void MainPage_CommandsRequested(SettingsPane sender, SettingsPaneCommandsRequestedEventArgs args)
         {
             UICommandInvokedHandler handler = new UICommandInvokedHandler(onSettingsCommand);
-
             SettingsCommand generalCommand = new SettingsCommand("generalSettings", "General", handler);
             args.Request.ApplicationCommands.Add(generalCommand);
 
@@ -97,8 +96,6 @@ namespace Excercise_1___Student_Registration
 
             SettingsCommand defaultCommand = new SettingsCommand("defaultPage", "Default", handler);
             args.Request.ApplicationCommands.Add(defaultCommand);
-
-
         }
 
         private void OnWindowActivated(object sender, Windows.UI.Core.WindowActivatedEventArgs e)
