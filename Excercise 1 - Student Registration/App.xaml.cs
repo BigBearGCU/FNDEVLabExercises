@@ -70,11 +70,7 @@ namespace Excercise_1___Student_Registration
             {
                 settings = new SettingsFlyout();
                 settings.FlyoutWidth = (Callisto.Controls.SettingsFlyout.SettingsFlyoutWidth)Enum.Parse(typeof(Callisto.Controls.SettingsFlyout.SettingsFlyoutWidth), settingsWidth.ToString());
-                //settings.HeaderBrush = new SolidColorBrush(Colors.Orange);
-                //settings.Background = new SolidColorBrush(Colors.Red);
-                settings.HeaderText = "Foo Bar Custom Settings";
-
-
+                settings.HeaderText = "Settings";
 
                 StackPanel sp = new StackPanel();
                 sp.Width = settingsWidth;
@@ -102,8 +98,11 @@ namespace Excercise_1___Student_Registration
 
         void b_Click(object sender, RoutedEventArgs e)
         {
+            //Grab the stack panel
             StackPanel sp = (StackPanel)settings.Content;
+            //Get the text box
             TextBox box=(TextBox)sp.FindName("userNameTxtBox");
+            //retrieve string from text box
             string s=box.Text;
         }
 
