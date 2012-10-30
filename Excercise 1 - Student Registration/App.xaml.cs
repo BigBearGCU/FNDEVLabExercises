@@ -186,13 +186,7 @@ namespace Excercise_1___Student_Registration
                 //else load from a stream
                 using (StreamReader reader=new StreamReader(await studentsFile.OpenStreamForReadAsync()))
                 {
-                    while (!reader.EndOfStream)
-                    {
-                        string line = reader.ReadLine();
-                        Student student = new Student();
-                        student.parse(line);
-                        RegisteredStudents.Add(student);
-                    }
+
                 }
             }
         }
@@ -201,10 +195,7 @@ namespace Excercise_1___Student_Registration
         {
             using (StreamWriter writer = new StreamWriter(await studentsFile.OpenStreamForWriteAsync()))
             {
-                foreach (Student student in RegisteredStudents)
-                {
-                    writer.WriteLine(student.ToString());
-                }
+
             }
         }
 
