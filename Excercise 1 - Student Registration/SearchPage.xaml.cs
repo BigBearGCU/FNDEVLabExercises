@@ -5,6 +5,7 @@ using System.Linq;
 using System.Xml.Serialization;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.Storage;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -60,8 +61,10 @@ namespace Excercise_1___Student_Registration
             carryOutSearch((string)searchTypeComboBox.SelectedValue, searchTermTxtBox.Text);
         }
 
-        void carryOutSearch(string searchType,string searchTxt)
+        async void carryOutSearch(string searchType,string searchTxt)
         {
+            StorageFolder storageFolder = Windows.Storage.ApplicationData.Current.LocalFolder;
+
             if (searchType.ToLower() == "firstname")
             {
                 var results = from s in (App.Current as App).RegisteredStudents
@@ -74,6 +77,14 @@ namespace Excercise_1___Student_Registration
                 search.TypeOfSearch = Search.SearchType.firstname;
 
                 XmlSerializer serializer = new XmlSerializer(typeof(Search));
+
+                StorageFile searchSaveFile=await storageFolder.CreateFileAsync("save.xml");
+
+                using (Stream stream = await searchSaveFile.OpenStreamForWriteAsync())
+                {
+                    serializer.Serialize(stream, search);
+                }
+
 
 
             }
