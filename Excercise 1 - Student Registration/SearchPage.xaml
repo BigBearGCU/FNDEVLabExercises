@@ -36,7 +36,7 @@
             <Button x:Name="backButton" Click="GoBack" IsEnabled="{Binding Frame.CanGoBack, ElementName=pageRoot}" Style="{StaticResource BackButtonStyle}"/>
             <TextBlock x:Name="pageTitle" Grid.Column="1" Text="{StaticResource AppName}" Style="{StaticResource PageHeaderTextStyle}"/>
         </Grid>
-        <Grid HorizontalAlignment="Left" Height="276" Margin="111,99,0,0" Grid.Row="1" VerticalAlignment="Top" Width="310">
+        <Grid HorizontalAlignment="Left" Height="276" Margin="162,114,0,0" VerticalAlignment="Top" Width="310" Grid.Row="1">
             <Grid.RowDefinitions>
                 <RowDefinition Height="37*"/>
                 <RowDefinition Height="56*"/>
@@ -53,7 +53,9 @@
             </ComboBox>
             <TextBlock HorizontalAlignment="Left" Margin="5,6,0,0" Grid.Row="2" TextWrapping="Wrap" Text="Search Term" VerticalAlignment="Top" Style="{StaticResource PageSubheaderTextStyle}" Height="30" Width="250"/>
             <TextBox x:Name="searchTermTxtBox" HorizontalAlignment="Left" Grid.Row="3" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="310" Height="32" Margin="0,10,0,0"/>
-            <Button x:Name="searchBtn" Content="Search" HorizontalAlignment="Left" Margin="92,10,0,0" Grid.Row="5" VerticalAlignment="Top" Height="39" Width="107" Click="searchBtn_Click"/>
+            <Button x:Name="searchBtn" Content="Search" HorizontalAlignment="Left" Margin="116,10,0,0" Grid.Row="5" VerticalAlignment="Top" Height="39" Width="83" Click="searchBtn_Click"/>
+            <Button x:Name="saveSrchBtn" Content="Save Search" HorizontalAlignment="Left" Margin="199,10,-1,0" Grid.Row="5" VerticalAlignment="Top" Height="39" Width="112" Click="saveSrchBtn_Click"/>
+            <Button x:Name="recalSrchBtn" Content="Recall Search" HorizontalAlignment="Left" Margin="-1,10,0,0" Grid.Row="5" VerticalAlignment="Top" Height="39" Width="112" Click="recalSrchBtn_Click"/>
         </Grid>
         <ListBox x:Name="resultsSelectionBox" HorizontalAlignment="Left" Height="261" Margin="506,114,0,0" Grid.Row="1" VerticalAlignment="Top" Width="310" SelectionChanged="resultsSelectionBox_SelectionChanged"/>
 

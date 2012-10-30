@@ -6,6 +6,7 @@ using System.Xml.Serialization;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.Storage;
+using Windows.Storage.Search;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -23,6 +24,8 @@ namespace Excercise_1___Student_Registration
     /// </summary>
     public sealed partial class SearchPage : Excercise_1___Student_Registration.Common.LayoutAwarePage
     {
+        Search search;
+
         public SearchPage()
         {
             this.InitializeComponent();
@@ -61,9 +64,9 @@ namespace Excercise_1___Student_Registration
             carryOutSearch((string)searchTypeComboBox.SelectedValue, searchTermTxtBox.Text);
         }
 
-        async void carryOutSearch(string searchType,string searchTxt)
+        void carryOutSearch(string searchType,string searchTxt)
         {
-            StorageFolder storageFolder = Windows.Storage.ApplicationData.Current.LocalFolder;
+            
 
             if (searchType.ToLower() == "firstname")
             {
@@ -72,30 +75,69 @@ namespace Excercise_1___Student_Registration
                               select s;
                 resultsSelectionBox.ItemsSource = results.ToList();
 
-                Search search = new Search();
+                search = new Search();
                 search.SearchTerm = searchTxt.ToLower();
                 search.TypeOfSearch = Search.SearchType.firstname;
-
-                XmlSerializer serializer = new XmlSerializer(typeof(Search));
-
-                StorageFile searchSaveFile=await storageFolder.CreateFileAsync("save.xml");
-
-                using (Stream stream = await searchSaveFile.OpenStreamForWriteAsync())
-                {
-                    serializer.Serialize(stream, search);
-                }
-
-
-
             }
             else if (searchType.ToLower()=="surname")
             {
-
+                search = new Search();
+                search.SearchTerm = searchTxt.ToLower();
+                search.TypeOfSearch = Search.SearchType.firstname;
             }
             else if (searchType.ToLower() == "course")
             {
-
+                search = new Search();
+                search.SearchTerm = searchTxt.ToLower();
+                search.TypeOfSearch = Search.SearchType.firstname;
             }
+           
+        }
+
+        async void saveSearch()
+        {
+            StorageFolder storageFolder = Windows.Storage.ApplicationData.Current.LocalFolder;
+
+            XmlSerializer serializer = new XmlSerializer(typeof(Search));
+
+            StorageFile searchSaveFile = await storageFolder.CreateFileAsync("search.xml");
+
+            using (Stream stream = await searchSaveFile.OpenStreamForWriteAsync())
+            {
+                serializer.Serialize(stream, search);
+            }
+        }
+
+        async void loadSearch()
+        {
+            StorageFolder storageFolder = Windows.Storage.ApplicationData.Current.LocalFolder;
+
+            XmlSerializer serializer = new XmlSerializer(typeof(Search));
+            StorageFileQueryResult fileResults = storageFolder.CreateFileQuery();
+            //Get all files in the directory
+            IReadOnlyList<StorageFile> fileList = await fileResults.GetFilesAsync();
+            //check to see if we have a file
+            StorageFile searchSaveFile = fileList.SingleOrDefault(file => file.Name == "search.xml");
+            if (searchSaveFile != null)
+            {
+                using (Stream stream = await searchSaveFile.OpenStreamForReadAsync())
+                {
+                    search = serializer.Deserialize(stream) as Search;
+                    searchTermTxtBox.Text = search.SearchTerm;
+                    searchTypeComboBox.SelectedIndex = (int)search.TypeOfSearch;
+                }
+            }
+
+        }
+
+        private void recalSrchBtn_Click(object sender, RoutedEventArgs e)
+        {
+            loadSearch();
+        }
+
+        private void saveSrchBtn_Click(object sender, RoutedEventArgs e)
+        {
+            saveSearch();
         }
     }
 }

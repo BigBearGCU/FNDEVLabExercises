@@ -183,20 +183,13 @@ namespace Excercise_1___Student_Registration
             }
             else
             {
-                //else load from a stream
-                using (StreamReader reader=new StreamReader(await studentsFile.OpenStreamForReadAsync()))
-                {
 
-                }
             }
         }
 
         async void SaveStudentDetails()
         {
-            using (StreamWriter writer = new StreamWriter(await studentsFile.OpenStreamForWriteAsync()))
-            {
 
-            }
         }
 
         /// <summary>
