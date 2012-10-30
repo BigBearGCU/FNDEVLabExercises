@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Xml.Serialization;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
 using Windows.Foundation;
@@ -175,21 +176,36 @@ namespace Excercise_1___Student_Registration
             //Get all files in the directory
             IReadOnlyList<StorageFile> fileList = await fileResults.GetFilesAsync();
             //check to see if we have a file
-            studentsFile=fileList.SingleOrDefault(file => file.Name == "students.txt");
+            studentsFile=fileList.SingleOrDefault(file => file.Name == "students.xml");
             if (studentsFile == null)
             {
                 //if not create
-                studentsFile=await storageFolder.CreateFileAsync("students.txt");
+                studentsFile=await storageFolder.CreateFileAsync("students.xml");
             }
             else
             {
-
+                try
+                {
+                    XmlSerializer serialzier = new XmlSerializer(typeof(List<string>));
+                    using (Stream s = await studentsFile.OpenStreamForReadAsync())
+                    {
+                        RegisteredStudents = serialzier.Deserialize(s) as List<Student>;
+                    }
+                }
+                catch (Exception e)
+                {
+                    string msg = e.ToString();
+                }
             }
         }
 
         async void SaveStudentDetails()
         {
-
+            XmlSerializer serializer = new XmlSerializer(typeof(List<Student>));
+            using (Stream s = await studentsFile.OpenStreamForWriteAsync())
+            {
+                serializer.Serialize(s, RegisteredStudents);
+            }
         }
 
         /// <summary>
