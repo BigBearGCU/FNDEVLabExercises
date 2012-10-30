@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Xml.Serialization;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.UI.Xaml;
@@ -67,6 +68,14 @@ namespace Excercise_1___Student_Registration
                               where s.Firstname.ToLower() == searchTxt.ToLower()
                               select s;
                 resultsSelectionBox.ItemsSource = results.ToList();
+
+                Search search = new Search();
+                search.SearchTerm = searchTxt.ToLower();
+                search.TypeOfSearch = Search.SearchType.firstname;
+
+                XmlSerializer serializer = new XmlSerializer(typeof(Search));
+
+
             }
             else if (searchType.ToLower()=="surname")
             {
